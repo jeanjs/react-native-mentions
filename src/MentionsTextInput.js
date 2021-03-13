@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, forwardRef } from 'react';
-import {View, Animated, TextInput, FlatList, ViewPropTypes, Platform} from 'react-native';
+import {View, Animated, TextInput, FlatList, ViewPropTypes, Platform, TextInputBase} from 'react-native';
 import { position } from 'caret-pos';
 import PropTypes from 'prop-types';
 import TextAreaAutoSize from 'react-autosize-textarea';
@@ -169,6 +169,7 @@ const MentionsTextInput = (props, forwardedRef) => {
   const renderList = () => (
     <FlatList
       key={cursor}
+      listKey={props.listKey || ''}
       keyboardShouldPersistTaps="always"
       horizontal={props.horizontal}
       // ListEmptyComponent={props.loadingComponent}
@@ -225,11 +226,12 @@ const MentionsTextInput = (props, forwardedRef) => {
 }
 
 MentionsTextInput.propTypes = {
-  textInputStyle: TextInput.propTypes.style,
-  suggestionsPanelStyle: ViewPropTypes.style,
+  textInputStyle: PropTypes.any,
+  suggestionsPanelStyle: PropTypes.any,
   trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   regex: PropTypes.instanceOf(RegExp),
   value: PropTypes.string,
+  listKey: PropTypes.string,
   onChangeText: PropTypes.func.isRequired,
   triggerCallback: PropTypes.func.isRequired,
   renderSuggestionsRow: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
