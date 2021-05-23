@@ -112,6 +112,7 @@ const MentionsTextInput = (props, forwardedRef) => {
     Animated.timing(suggestionRowHeight, {
       toValue: 0,
       duration: 100,
+      useNativeDriver: false,
     }).start();
   }, []);
 
@@ -123,6 +124,7 @@ const MentionsTextInput = (props, forwardedRef) => {
     Animated.timing(suggestionRowHeight, {
       toValue: height != null ? height : props.suggestionRowHeight,
       duration: 100,
+      useNativeDriver: false
     }).start();
   }, [props.suggestionRowHeight]);
 
@@ -169,6 +171,7 @@ const MentionsTextInput = (props, forwardedRef) => {
   const renderList = () => (
     <FlatList
       key={cursor}
+      listKey={props.listKey || ''}
       keyboardShouldPersistTaps="always"
       horizontal={props.horizontal}
       // ListEmptyComponent={props.loadingComponent}
@@ -225,11 +228,12 @@ const MentionsTextInput = (props, forwardedRef) => {
 }
 
 MentionsTextInput.propTypes = {
-  textInputStyle: TextInput.propTypes.style,
-  suggestionsPanelStyle: ViewPropTypes.style,
+  textInputStyle: PropTypes.any,
+  suggestionsPanelStyle: PropTypes.any,
   trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   regex: PropTypes.instanceOf(RegExp),
   value: PropTypes.string,
+  listKey: PropTypes.string,
   onChangeText: PropTypes.func.isRequired,
   triggerCallback: PropTypes.func.isRequired,
   renderSuggestionsRow: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
